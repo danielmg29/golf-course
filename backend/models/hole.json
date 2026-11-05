@@ -1,0 +1,20 @@
+{
+  "name": "Hole",
+  "verbose_name_plural": "Holes",
+  "ordering": ["number"],
+  "fields": [
+    { "name": "id", "field": "AutoField", "verbose_name": "ID" },
+    { "name": "number", "field": "PositiveIntegerField", "verbose_name": "Hole", "min_value": 1, "max_value": 18 },
+    { "name": "name", "field": "CharField", "max_length": 60 },
+    { "name": "par", "field": "PositiveIntegerField", "min_value": 3, "max_value": 5 },
+    { "name": "yards", "field": "PositiveIntegerField" },
+    { "name": "stroke_index", "field": "PositiveIntegerField", "min_value": 1, "max_value": 18 }
+  ],
+  "adaptive": {
+    "display_field": "name",
+    "list_fields": ["number", "name", "par", "yards", "stroke_index"],
+    "filter_fields": ["par"],
+    "tenant_field": null,
+    "immutable": true
+  }
+}
