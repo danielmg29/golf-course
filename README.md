@@ -2,28 +2,53 @@
 
 A show-and-tell site for a golf course, and a practice project for the Adaptive Convergence v2 UI (manual chapter 6). The home page is a placeholder that proves the stack works end to end. The kernel components and real site content don't exist yet.
 
+## Getting started
+
+You need a [Neon](https://neon.com) project and Node.js 22.18+ or 24.11+.
+
+1. Copy `.env.example` to `.env.local` and fill in both connection strings from Neon's Connect dialog.
+2. Install, create the tables and add the sample data:
+
+   ```bash
+   npm install
+   npm run db:deploy
+   npm run db:seed
+   ```
+
+3. Start the app:
+
+   ```bash
+   npm run dev
+   ```
+
 ## Commands
 
 ```bash
-npm run dev      # regenerate the contract, then start the dev server
-npm run build    # regenerate the contract, then build for production
-npm run lint     # ESLint
-npm run schema   # regenerate the contract from the JSON models
-npm run verify   # fail on a stale contract, then typecheck and test
+npm run dev         # regenerate the contract, then start the dev server
+npm run build       # regenerate the contract, then build (needs the database)
+npm run lint        # ESLint
+npm run schema      # regenerate the Prisma client and the contract
+npm run verify      # fail on a stale contract, then typecheck and test
+npm run db:migrate  # create and apply a migration after a schema change
+npm run db:deploy   # apply committed migrations
+npm run db:seed     # add or update the sample data
 ```
 
 ## Stack
 
-Next.js 16 (App Router), TypeScript, Tailwind CSS v4, Zod, TanStack Query, Jotai, Three.js and GSAP.
+Next.js 16 (App Router), TypeScript, Tailwind CSS v4, Prisma 7, Neon PostgreSQL, Zod, TanStack Query, Jotai, Three.js and GSAP.
 
 Styling is Tailwind only, with no component library. CVA, `clsx` and `tailwind-merge` stay because they only compose Tailwind classes.
+
+All Prisma packages are pinned to the same exact version, 7.10.1, because they have to match. npm's `latest` tag for `prisma` currently points at an 8.0 release candidate, so ignore the CLI's update banner until 8.0 is stable.
 
 ## Layout
 
 | Path | Holds |
 | --- | --- |
 | `app/` | Routing and layouts only. The site lives in the `(marketing)` route group. |
-| `backend/` | The simulated backend: JSON models, JSON rows and the contract generator. |
+| `prisma/` | The schema, migrations and seed data. |
+| `backend/` | The database client, the repository and the contract generator. |
 | `components/dynamic/` | The contract-driven kernel, including the field registry in `fields/`. |
 | `components/layout/` | Layout primitives. |
 | `components/three/` | `SceneCanvas`, which runs Three.js scenes. |
@@ -34,30 +59,35 @@ Styling is Tailwind only, with no component library. CVA, `clsx` and `tailwind-m
 | `lib/motion.ts`, `lib/three.ts` | GSAP and Three.js configuration. |
 | `store/` | Jotai atoms for per-row and per-cell state. |
 
-## The simulated backend
+## The backend
 
-JSON stands in for Django, using the same field classes and option names so the two stay easy to compare.
+`prisma/schema.prisma` is the single source of truth, in the role the manual gives to Django models.
 
-| Django | Here |
+| Manual (Django) | Here |
 | --- | --- |
-| `models.py` and the `Adaptive` class | `backend/models/<model>.json` |
-| Database tables | `backend/fixtures/<model>.json` |
-| `manage.py export_schema` | `npm run schema` |
+| `models.py` | `prisma/schema.prisma` |
+| The `Adaptive` class | `///` annotations in the schema (`@adaptive` and `@field`) |
+| `manage.py export_schema` | `npm run schema`, through `backend/generate-contract.mts` |
+| Migrations | `prisma/migrations/` |
 | The dynamic endpoint | `GET /api/<model>` and `GET /api/<model>/<id>` |
 
-Lists accept `sort` (`-` for descending), `q`, `page`, `size` and `f.<field>`, for example `/api/hole?f.par=3&sort=-yards`. Errors come back as `{ code, detail }` with a 400 or 404 status.
+Lists accept `sort` (`-` for descending), `q`, `page`, `size` and `f.<field>`, for example `/api/hole?f.par=3&sort=-yards`. Errors come back as `{ code, detail }` with a 400, 404 or 503 status.
 
-It's read-only for now. There is no write path. All 18 holes are invented sample data.
+The API is read-only. There is no authentication yet, so don't add write routes without it. All 18 holes are invented sample data in `prisma/seed-data.ts`.
 
-**To add a model:**
+**To change the data model:**
 
-1. Add `backend/models/<model>.json` and `backend/fixtures/<model>.json`, with the same file name.
-2. Run `npm run schema`.
-3. Commit the JSON together with the regenerated `lib/generated/schema.ts` and `backend/tables.generated.ts`.
+1. Edit `prisma/schema.prisma`.
+2. Run `npm run db:migrate -- --name describe-the-change`, which also regenerates the contract.
+3. Fix whatever the compiler names, then commit the schema, the migration and `lib/generated/schema.ts` together.
 
-`npm run verify` fails if the generated files are out of date, and a fixture row that breaks the contract fails the tests and the build. Renaming a field produces a compile error everywhere the old name is used.
+`npm run verify` fails if the contract is out of date, and the tests fail if the schema has changed without a migration. Renaming a field produces a compile error everywhere the old name is used.
 
-Server Components read through `getModelPage` in `lib/server-queries.ts`. It's the only frontend file that knows the backend runs in-process, so pointing it at a real API later changes nothing above it.
+**Connections:** the app uses Neon's pooled connection (`DATABASE_URL`) through `@prisma/adapter-neon`, and the Prisma CLI uses the direct one (`DATABASE_URL_UNPOOLED`).
+
+**Caching:** Server Components read through `getModelPage`, which caches results for up to an hour, so a change made directly in the database can take that long to appear. `next build` runs these queries to prerender pages, so it needs `DATABASE_URL` and a reachable database.
+
+**Tests** need no database. They run the committed migrations against a real Postgres in memory (PGlite).
 
 ## Three.js and GSAP
 
@@ -73,13 +103,13 @@ First-load JavaScript on `/` is 160 KB gzipped: 133 KB for Next.js, React and th
 
 | Manual | Here | Why |
 | --- | --- | --- |
-| Django backend | JSON in `backend/` | There is no real backend in this project. |
-| `frontend/` beside `backend/` | `backend/` inside the project root | The simulated backend ships with the app. |
+| Django backend | TypeScript, Prisma and Neon | The project's chosen stack. |
+| `frontend/` beside `backend/` | `prisma/` and `backend/` inside the project root | The backend ships with the app. |
 | Backend commit in the generated header | Left out | It would make `verify` fail after every commit. |
 | shadcn/ui primitives in `components/ui/` | None | Tailwind only, so controls are built on native elements or by hand. |
 | `(console)/[org]/[model]` routes | Not created | This is a public site with no tenants. |
-| `unstable_cache` in `server-queries.ts` | No caching | The JSON is already in memory. Revisit with a real API. |
-| `API_URL`, `SESSION_SECRET`, `NEXT_PUBLIC_WS_URL` | Only `NEXT_PUBLIC_APP_NAME` | Nothing uses the others, and required variables would fail the build. |
+| `unstable_cache` in `server-queries.ts` | `"use cache"` with `cacheLife` and `cacheTag` | The current Next.js equivalent. |
+| `API_URL`, `SESSION_SECRET`, `NEXT_PUBLIC_WS_URL` | `DATABASE_URL`, `DATABASE_URL_UNPOOLED` and `NEXT_PUBLIC_APP_NAME` | Nothing uses the others, and required variables would fail the build. |
 | Bare HSL channel tokens | Complete `oklch()` values | Tailwind v4 applies opacity with `color-mix()`, so `bg-primary/10` works on complete colours. |
 | Dark tokens only under `prefers-color-scheme` | One `@variant dark` block | The manual's `[data-theme="dark"]` rule is empty, so pinning dark would not work. |
 
@@ -92,4 +122,5 @@ First-load JavaScript on `/` is 160 KB gzipped: 133 KB for Next.js, React and th
 
 ## Troubleshooting
 
-If `npm run typecheck` reports a missing route under `.next/dev/types` after you delete a route, delete `.next` and run it again.
+- **`npm run typecheck` reports a missing route under `.next/dev/types`** after you delete a route: delete `.next` and run it again.
+- **`npm run schema` says `spawn node backend/generate-contract.mts ENOENT` on Windows:** that message means the generator crashed before it could report an error. Run `node backend/generate-contract.mts` directly to see the real one.
