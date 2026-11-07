@@ -43,3 +43,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Impeccable review captures and live-session state: regenerable, and large.
+/.impeccable/review/
+/.impeccable/live/

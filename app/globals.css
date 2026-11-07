@@ -1,68 +1,475 @@
 @import "tailwindcss";
 
-/*
-  Dark follows the OS unless <html data-theme="light|dark"> pins it. CSS alone
-  decides this, so the first paint is themed with no JS provider (manual 6.3, step 4).
-*/
-@custom-variant dark {
-  &:where([data-theme="dark"], [data-theme="dark"] *) {
-    @slot;
-  }
-  @media (prefers-color-scheme: dark) {
-    &:where(:root:not([data-theme="light"]), :root:not([data-theme="light"]) *) {
-      @slot;
-    }
-  }
+/* The site's working names, now carrying the blueprint's values ("Beyond the 18th", 2026-11-06):
+   the page ground is forest, type is off-white, raised panels sit a shade deeper, and gold is
+   antique gold, for the fairway line, accents and the primary action. Inside a light band
+   (.band-light) the same names are re-inked for ivory, so every tool reads on either ground. */
+@theme {
+  --color-reserve: #102f25;
+  --color-charcoal: #0c271e;
+  --color-alabaster: #f5f1e9;
+  --color-gold: #b89556;
+  --color-champagne: #c9a86c;
+
+  --text-hero: clamp(3.375rem, 2.214rem + 4.762vw, 6.5rem);
+  --text-hero--line-height: 0.96;
+  --text-section: clamp(2.75rem, 2.007rem + 3.048vw, 4.75rem);
+  --text-section--line-height: 1;
+  --text-title: clamp(2rem, 1.721rem + 1.143vw, 2.75rem);
+  --text-title--line-height: 1.08;
+
+  --ease-fluid: cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* The homepage's putt journey: a sky that runs from misty dawn to amber dusk, a stitched
+     green, tan leather plates written in espresso ink. */
+  --color-dawn: #0a1310;
+  --color-mist: #1d2e28;
+  --color-haze: #3e4c3c;
+  --color-amber: #c9862f;
+  --color-ember: #7e3a1c;
+  --color-dusk: #2a1610;
+  --color-turf: #0c2c1b;
+  --color-leather: #a8754a;
+  --color-thread: #eadbc0;
+  --color-ink: #1b110a;
+
+  /* The homepage blueprint ("Beyond the 18th"): the owner's working tokens. Antique gold is
+     for the fairway line and premium accents only. */
+  --color-forest: #102f25;
+  --color-club: #214a39;
+  --color-antique: #b89556;
+  --color-ivory: #e8dfcd;
+  --color-coal: #252a25;
+  --color-sage: #52705c;
+  --color-paper: #f5f1e9;
+  --color-stone: #777e76;
+
+  /* The blueprint's type scale, desktop at 1440px and mobile at 390px, fluid between. */
+  --text-display-xl: clamp(3.375rem, 2.214rem + 4.762vw, 6.5rem);
+  --text-display-xl--line-height: 0.96;
+  --text-display-lg: clamp(2.75rem, 2.007rem + 3.048vw, 4.75rem);
+  --text-display-lg--line-height: 1;
+  --text-h1: clamp(2.375rem, 1.864rem + 2.095vw, 3.75rem);
+  --text-h1--line-height: 1.04;
+  --text-h2: clamp(2rem, 1.721rem + 1.143vw, 2.75rem);
+  --text-h2--line-height: 1.08;
+  --text-h3: clamp(1.5rem, 1.407rem + 0.381vw, 1.75rem);
+  --text-h3--line-height: 1.2;
+  --text-lead: clamp(1.0625rem, 1.039rem + 0.095vw, 1.125rem);
+  --text-lead--line-height: 1.6;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-border: var(--border);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-destructive: var(--destructive);
-  --color-success: var(--success);
-  --color-warning: var(--warning);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-cormorant);
+  --font-sans: var(--font-manrope);
+  --font-heritage: var(--font-caslon-display);
+  --font-caslon: var(--font-libre-caslon);
+  --font-ui: var(--font-manrope);
+
+  --color-background: var(--color-reserve);
+  --color-foreground: var(--color-alabaster);
+  --color-muted: var(--color-charcoal);
+  --color-muted-foreground: color-mix(in oklab, var(--color-alabaster) 70%, transparent);
+  --color-border: color-mix(in oklab, var(--color-gold) 25%, transparent);
+  --color-primary: var(--color-gold);
+  --color-primary-foreground: var(--color-reserve);
+  --color-destructive: #e5806f;
+  --color-success: #8fbf9f;
+  --color-warning: var(--color-gold);
 }
 
+/* The homepage story's scroll-driven layout: one sticky stage with its acts stacked on top
+   of each other. CSS decides it before any script runs, so the page's height never changes
+   at hydration. Without scripts, or with reduced motion, the acts are ordinary sections.
+   Keep in step with LAYERED in features/story/Story.tsx. */
+@custom-variant layered (@media (scripting: enabled) and (prefers-reduced-motion: no-preference));
+
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --border: oklch(0.922 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --success: oklch(0.627 0.194 149.214);
-  --warning: oklch(0.769 0.188 70.08);
   /* Consumed by the CVA density variants (manual 6.6). */
   --density-pad: 1rem;
   --density-gap: 0.75rem;
   --radius: 0.5rem;
+}
 
-  @variant dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --border: oklch(1 0 0 / 10%);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
+/* Short labels: the blueprint's metadata style, sentence case, Manrope at 12 to 14px. */
+@utility type-label {
+  font-family: var(--font-manrope);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums lining-nums;
+  @media (width >= 48rem) {
+    font-size: 0.8125rem;
+  }
+}
+
+/* Running text stays in sentence case, because long passages in spaced capitals are slow to read. */
+@utility type-body {
+  font-family: var(--font-manrope);
+  font-size: 1rem;
+  line-height: 1.7;
+  letter-spacing: 0.005em;
+  color: color-mix(in oklab, var(--color-alabaster) 84%, transparent);
+}
+
+@utility type-display {
+  font-family: var(--font-display);
+  font-weight: 300;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+
+/* A light band: ivory ground with the working names re-inked, so components written for the
+   forest ground (text-alabaster, text-gold, bg-charcoal panels, gold buttons) read here too.
+   Gold deepens to a bronze that holds 4.5:1 on ivory; panels lift to paper. */
+.band-light {
+  --color-alabaster: #1f241f;
+  --color-gold: #7a5f2c;
+  --color-champagne: #694f22;
+  --color-charcoal: #f5f1e9;
+  --color-reserve: #f5f1e9;
+  background-color: var(--color-ivory);
+  color: var(--color-coal);
+}
+/* SVG labels that cross lines: a halo of the ground colour keeps them readable. */
+.halo {
+  paint-order: stroke;
+  stroke: var(--color-reserve);
+  stroke-width: 0.7px;
+  stroke-linejoin: round;
+}
+.band-light .halo {
+  stroke: var(--color-ivory);
+}
+
+.band-paper {
+  --color-alabaster: #1f241f;
+  --color-gold: #7a5f2c;
+  --color-champagne: #694f22;
+  --color-charcoal: #ebe3d3;
+  --color-reserve: #ebe3d3;
+  background-color: var(--color-paper);
+  color: var(--color-coal);
+}
+
+/* Headings in the putt journey: a heritage Caslon, set large and tight. */
+@utility type-heritage {
+  font-family: var(--font-caslon-display);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+/* Times, distances and figures: lining, equal-width and widely spaced, so they read like a scorecard. */
+@utility type-figure {
+  font-family: var(--font-manrope);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+}
+
+/* Tan leather plates. The texture is Poly Haven's CC0 fabric_leather_02 (public/textures). */
+@utility leather {
+  background-color: var(--color-leather);
+  background-image:
+    linear-gradient(160deg, rgb(255 236 210 / 0.16), transparent 42%, rgb(40 20 8 / 0.18)),
+    /* Evens out the texture's folds so small type stays easy to read. */
+    linear-gradient(rgb(176 124 80 / 0.42), rgb(176 124 80 / 0.42)),
+    url("/textures/leather.webp");
+  background-size: auto, auto, 520px;
+  color: var(--color-ink);
+  box-shadow:
+    inset 0 1px 0 rgb(255 240 220 / 0.25),
+    inset 0 -2px 6px rgb(40 20 8 / 0.25),
+    0 30px 60px -28px rgb(0 0 0 / 0.55);
+}
+
+/* Brushed champagne gold: fine horizontal grain over a soft metal falloff. */
+@utility brushed {
+  background-color: var(--color-gold);
+  background-image:
+    repeating-linear-gradient(0deg, rgb(255 255 255 / 0.07) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, #ecd27a 0%, #d4af37 48%, #b18c2a 100%);
+  color: var(--color-ink);
+  box-shadow:
+    inset 0 1px 0 rgb(255 248 220 / 0.6),
+    inset 0 -1px 0 rgb(90 60 10 / 0.35),
+    0 10px 24px -12px rgb(0 0 0 / 0.6);
+}
+
+/* The homepage's Swiss grid: 4 columns and 16px gutters on phones, 6 and 20px on tablets,
+   12 and 24px from 1024px, as the blueprint sets out. */
+@utility grid-swiss {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 16px;
+  @media (width >= 48rem) {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    column-gap: 20px;
+  }
+  @media (width >= 64rem) {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 24px;
+  }
+}
+
+/* The page's margins: 20px on phones, 32 on tablets, 48 to 64 on desktops. */
+/* On wide screens the flagstick rail (72px, SiteHeader) runs down the left edge, so the frame's
+   left margin clears it and the page reads asymmetrically, from the rail outward. */
+@utility frame {
+  width: 100%;
+  max-width: 90rem;
+  margin-inline: auto;
+  padding-inline: 20px;
+  @media (width >= 48rem) {
+    padding-inline: 32px;
+  }
+  @media (width >= 64rem) {
+    padding-inline: 112px 48px;
+  }
+  @media (width >= 90rem) {
+    padding-inline: max(64px, calc(112px - (100vw - 90rem) / 2)) 64px;
+  }
+}
+
+/* A full-bleed rail whose first item lines up with the frame's content edge, and snaps there. */
+@utility frame-rail {
+  padding-left: 20px;
+  scroll-padding-left: 20px;
+  @media (width >= 48rem) {
+    padding-left: 32px;
+    scroll-padding-left: 32px;
+  }
+  @media (width >= 64rem) {
+    padding-left: 112px;
+    scroll-padding-left: 112px;
+  }
+  @media (width >= 90rem) {
+    padding-left: max(112px, calc((100% - 90rem) / 2 + 64px));
+    scroll-padding-left: max(112px, calc((100% - 90rem) / 2 + 64px));
+  }
+}
+
+/* Small functional labels: the chapter index, metadata and captions. */
+@utility type-meta {
+  font-family: var(--font-manrope);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums lining-nums;
+  @media (width >= 48rem) {
+    font-size: 0.875rem;
+  }
+}
+
+@utility field {
+  width: 100%;
+  height: 3.25rem;
+  border-bottom: 1px solid color-mix(in oklab, var(--color-gold) 40%, transparent);
+  background: transparent;
+  font-size: 1rem;
+  color: var(--color-alabaster);
+  transition: border-color 300ms var(--ease-fluid);
+  &::placeholder {
+    color: color-mix(in oklab, var(--color-alabaster) 40%, transparent);
+  }
+  &:focus {
+    outline: none;
+    border-color: var(--color-gold);
   }
 }
 
 @layer base {
-  body {
-    @apply bg-background text-foreground;
-  }
   html {
-    @apply font-sans;
+    color-scheme: dark;
+    background: var(--color-reserve);
+    scroll-padding-top: 6rem;
+    scrollbar-color: color-mix(in oklab, var(--color-gold) 45%, transparent) var(--color-reserve);
   }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+  /* No background on body: html already paints the page colour, and a body background
+     would cover the world's canvas, which sits behind the content at z-index -10. */
+  body {
+    color: var(--color-alabaster);
+    font-family: var(--font-sans);
+    /* Cormorant defaults to old-style figures, which make prices and scores harder to scan. */
+    font-variant-numeric: lining-nums;
+  }
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-reserve);
+  }
+  :focus-visible {
+    outline: 1px solid var(--color-gold);
+    outline-offset: 3px;
+  }
+  /* Film grain, on a fixed layer so it never repaints while scrolling. */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.018;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/* Keeps italics and descenders from being cut off while a line slides out of its mask. */
+.split-line-mask {
+  padding: 0.14em 0.08em 0.2em;
+  margin: -0.14em -0.08em -0.2em;
+}
+
+/* Elements the page animates in stay hidden until GSAP takes over, so nothing flashes on
+   load. With scripts off or reduced motion on they just show, and if a script fails to
+   load the fallback animation reveals them. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-lines],
+  [data-fade],
+  [data-clip],
+  [data-rise] > *,
+  [data-mask] {
+    visibility: hidden;
+    animation: reveal-fallback 0s linear 4s forwards;
+  }
+}
+
+/* The world fades in over its first frame, and pages fade their poster artwork out in step.
+   The runtime sets data-world="live" on <html> once it has drawn. */
+[data-world-canvas] canvas,
+[data-world-poster] {
+  transition: opacity 1.4s var(--ease-fluid);
+}
+[data-world-canvas] canvas {
+  opacity: 0;
+}
+html[data-world="live"] [data-world-canvas] canvas {
+  opacity: 1;
+}
+html[data-world="live"] [data-world-poster] {
+  opacity: 0;
+}
+
+/* The first-visit loading screen (components/feedback/Loader.tsx). Only <html data-loader="on">,
+   set before the first paint, shows it; it holds the page still underneath, and fades itself
+   out (and lets the page scroll) after about three seconds even if scripts fail. */
+[data-loader-screen] {
+  display: none;
+}
+html[data-loader="on"] {
+  overflow: hidden;
+  animation: loader-unlock 0s linear 3.8s forwards;
+}
+@keyframes loader-unlock {
+  to {
+    overflow: visible;
+  }
+}
+html[data-loader="on"] [data-loader-screen] {
+  display: flex;
+  animation: loader-failsafe 0.6s ease-out 3.2s forwards;
+}
+@keyframes loader-failsafe {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Italics are kept for one phrase a page, in its main heading. Section headings stay upright,
+   so the voice doesn't fall into a reflex of italicising every second half. */
+main :is(h2, h3) em {
+  font-style: normal;
+}
+
+/* The error pages' illustrations draw their last frame twice: animated, and still for reduced motion. */
+[data-art="still"] {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-art="moving"] {
+    display: none;
+  }
+  [data-art="still"] {
+    display: inline;
+  }
+}
+
+/* A still ball stands in until the world draws the real one, then steps aside. */
+[data-ball-marker] {
+  transition: opacity 0.6s var(--ease-fluid);
+}
+html[data-world="live"] [data-ball-marker] {
+  opacity: 0;
+}
+
+/* Acts that draw objects on top of the page (the putt journey's ball) lift the canvas above
+   the content, still under the header and the floating buttons. It never takes clicks. */
+html[data-world-layer="over"] [data-world-canvas] {
+  z-index: 20;
+}
+
+/* The dawn mist drifts slowly; with reduced motion it simply stays. */
+@keyframes mist-drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes reveal-fallback {
+  to {
+    visibility: visible;
+  }
+}
+
+/* The homepage hero's entrance runs in CSS, so the headline and its actions show on the first
+   paint without waiting for scripts (it is the page's largest element). Reduced motion skips it. */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.6em);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-hero-rise] > * {
+    animation: hero-rise 650ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--rise, 0) * 90ms + 150ms);
+  }
+}
+
+/* The header and the flagstick rail are drawn in currentColor: off-white over dark grounds, and
+   charcoal over light ones (lib/use-ground-tone.ts sets the tone), where the shade steps aside.
+   The menu and the primary button keep their own colours. */
+[data-site-header],
+[data-site-rail] {
+  color: var(--color-paper);
+  transition: color 350ms ease;
+}
+html[data-header-tone="light"] :is([data-site-header], [data-site-rail]) {
+  color: var(--color-coal);
+  --color-alabaster: var(--color-coal);
+  --color-gold: #7a5f2c;
+}
+html[data-header-tone="light"] [data-site-shade] {
+  background-image: linear-gradient(180deg, rgb(232 223 205 / 0.94), rgb(232 223 205 / 0));
+}
+html[data-float-tone="light"] [data-floating-action] > button {
+  background-color: var(--color-forest);
+  color: var(--color-paper);
+}
+html[data-float-tone="hide"] [data-floating-action] {
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(1rem);
 }

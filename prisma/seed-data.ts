@@ -27,10 +27,15 @@ export const holes = [
 export async function seedRows(db: PrismaClient, rows: typeof holes) {
   const parsed = HoleSchema.omit({ id: true }).array().parse(rows);
 
+  // A first connection to Neon can take around ten seconds, far past Prisma's default
+  // two-second wait for a transaction to start, and each upsert is a network round trip.
   await db.$transaction(
-    parsed.map((hole) =>
-      db.hole.upsert({ where: { number: hole.number }, create: hole, update: hole }),
-    ),
+    async (tx) => {
+      for (const hole of parsed) {
+        await tx.hole.upsert({ where: { number: hole.number }, create: hole, update: hole });
+      }
+    },
+    { maxWait: 30_000, timeout: 120_000 },
   );
 }
 

@@ -13,7 +13,7 @@ test("uses the default app name when the variable is unset", async () => {
 
   const { env } = await import("@/lib/env");
 
-  expect(env.NEXT_PUBLIC_APP_NAME).toBe("Golf Course");
+  expect(env.NEXT_PUBLIC_APP_NAME).toBe("The Reserve");
 });
 
 test("rejects an empty app name instead of rendering a blank title", async () => {

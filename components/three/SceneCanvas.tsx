@@ -20,20 +20,36 @@ export function SceneCanvas({ load, label, fallback, className }: SceneCanvasPro
   useEffect(() => {
     let active = true;
     let unmount: (() => void) | undefined;
+    const element = container.current;
+    if (!element) return;
 
-    Promise.all([import("@/lib/three"), load()])
-      .then(([{ mountStage }, scene]) => {
-        if (active && container.current) {
-          unmount = mountStage(container.current, scene.default);
-        }
-      })
-      .catch((error: unknown) => {
-        console.error(error);
-        if (active) setFailed(true);
-      });
+    const start = () =>
+      Promise.all([import("@/lib/three"), load()])
+        .then(([{ mountStage }, scene]) => {
+          if (active && container.current) {
+            unmount = mountStage(container.current, scene.default);
+          }
+        })
+        .catch((error: unknown) => {
+          console.error(error);
+          if (active) setFailed(true);
+        });
+
+    // Three.js and the scene download only once the canvas is about a screen away, so a scene
+    // far down a page costs nothing until the visitor heads towards it.
+    const approach = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        approach.disconnect();
+        void start();
+      },
+      { rootMargin: "100% 0px" },
+    );
+    approach.observe(element);
 
     return () => {
       active = false;
+      approach.disconnect();
       unmount?.();
     };
   }, [load]);

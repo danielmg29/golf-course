@@ -1,4 +1,5 @@
 import { cacheLife, cacheTag } from "next/cache";
+import { connection } from "next/server";
 import { getRows } from "@/backend/repository";
 import type { ListQuery } from "@/lib/contract";
 import type { ModelName } from "@/lib/generated/schema";
@@ -15,4 +16,18 @@ export async function getModelPage<M extends ModelName>(model: M, query?: ListQu
   const result = await getRows(model, query);
   if (result.kind === "err") throw new Error(`${model}: ${result.error.detail}`);
   return result.value;
+}
+
+/**
+ * For a page that still works without this data: a failed read returns null. Runs per
+ * request, so a brief outage can't get frozen into the prerendered page. Only successful
+ * reads are cached, so the next visitor simply tries again. Render it inside <Suspense>.
+ */
+export async function findModelPage<M extends ModelName>(model: M, query?: ListQuery) {
+  await connection();
+  try {
+    return await getModelPage(model, query);
+  } catch {
+    return null;
+  }
 }
