@@ -11,6 +11,8 @@ Scope: the homepage (`app/(marketing)/page.tsx`), and since 2026-11-07 the whole
 
 Audience and action: prospective members (Kenyan executives, founders, high-net-worth individuals). Hero primary action: Explore the club (owner's choice of the blueprint's two options); secondary: Discover the course. Membership (apply) and booking (tee time, M-Pesa) carry chapters 05 and 07.
 
+Owner decisions (2026-11-09): the loading putt plays before every page (first loads, links inside the site, back and forward), always in full before the page shows; it stays skippable and never shows under reduced motion.
+
 Owner decisions (2026-11-07): no drawn line in the hero, the ball flies it instead; the drive ends on hole 1 of the 3D course, where its camera starts; the course fills the screen in chapter 03; the loading putt plays once a visit, only while the page loads (capped near two seconds), skippable and never under reduced motion; the inner pages move into the blueprint system, each with its own fairway-line storyline from the blueprint's section 4.
 
 Owner decisions (2026-11-06): blueprint palette on the homepage (Forest #102F25, Club green #214A39, Antique gold #B89556, Warm ivory #E8DFCD, Charcoal #252A25, Sage #52705C, Off-white #F5F1E9, Stone #777E76); "The Reserve" stays the club's name; "Beyond the 18th" is the concept's title.

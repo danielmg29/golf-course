@@ -357,15 +357,17 @@ html[data-world="live"] [data-world-poster] {
   opacity: 0;
 }
 
-/* The first-visit loading screen (components/feedback/Loader.tsx). Only <html data-loader="on">,
-   set before the first paint, shows it; it holds the page still underneath, and fades itself
-   out (and lets the page scroll) after about three seconds even if scripts fail. */
+/* The loading screen (components/feedback/Loader.tsx), before every page. Only
+   <html data-loader="on"> shows it: set before the first paint on a page's first load, and by
+   the loader for moves between pages. On a first load it holds the page still underneath. If
+   scripts fail, it fades itself out (and lets the page scroll) after twelve seconds; the
+   loader itself never takes that long. */
 [data-loader-screen] {
   display: none;
 }
-html[data-loader="on"] {
+html[data-loader="on"]:not([data-loader-mode="nav"]):not([data-loader-mode="back"]) {
   overflow: hidden;
-  animation: loader-unlock 0s linear 3.8s forwards;
+  animation: loader-unlock 0s linear 12.6s forwards;
 }
 @keyframes loader-unlock {
   to {
@@ -374,7 +376,7 @@ html[data-loader="on"] {
 }
 html[data-loader="on"] [data-loader-screen] {
   display: flex;
-  animation: loader-failsafe 0.6s ease-out 3.2s forwards;
+  animation: loader-failsafe 0.6s ease-out 12s forwards;
 }
 @keyframes loader-failsafe {
   to {
