@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { getRow, getRows, parseListQuery } from "@/backend/repository";
 
-const STATUS = { NOT_FOUND: 404, INVALID_QUERY: 400 } as const;
+const STATUS = { NOT_FOUND: 404, INVALID_QUERY: 400, UNAVAILABLE: 503 } as const;
 
 // One handler serves every model, like the manual's dynamic endpoint:
 //   GET /api/hole?sort=-yards&f.par=3

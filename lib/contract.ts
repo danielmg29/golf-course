@@ -19,6 +19,7 @@ export type Widget =
   | "number"
   | "currency"
   | "select"
+  | "relation"
   | "switch"
   | "date"
   | "datetime";
@@ -66,7 +67,7 @@ export type Page<T> = {
 
 // Errors are values, as in the manual's Result type (section 3.2).
 export type BackendError = {
-  code: "NOT_FOUND" | "INVALID_QUERY";
+  code: "NOT_FOUND" | "INVALID_QUERY" | "UNAVAILABLE";
   detail: string;
 };
 

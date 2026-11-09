@@ -9,13 +9,29 @@ const setup = () => {};
 const load = async () => ({ default: setup });
 const mount = vi.mocked(mountStage);
 
+// jsdom has no IntersectionObserver. This one reports the canvas as on screen at once, so
+// the scene starts loading straight away, as it does when the canvas is near the viewport.
+class OnScreen {
+  constructor(private readonly callback: IntersectionObserverCallback) {}
+  observe(target: Element) {
+    this.callback([{ isIntersecting: true, target } as IntersectionObserverEntry], this as unknown as IntersectionObserver);
+  }
+  disconnect() {}
+  unobserve() {}
+  takeRecords() {
+    return [];
+  }
+}
+
 beforeEach(() => {
   mount.mockReset();
+  vi.stubGlobal("IntersectionObserver", OnScreen);
 });
 
 afterEach(() => {
   cleanup();
   vi.restoreAllMocks();
+  vi.unstubAllGlobals();
 });
 
 test("mounts the scene and tears it down on unmount", async () => {
@@ -56,4 +72,30 @@ test("never mounts a scene that was unmounted while still loading", async () => 
   });
 
   expect(mount).not.toHaveBeenCalled();
+});
+
+test("waits to load the scene until the canvas comes near the screen", async () => {
+  let reveal: () => void = () => {};
+  vi.stubGlobal(
+    "IntersectionObserver",
+    class {
+      constructor(callback: IntersectionObserverCallback) {
+        reveal = () => callback([{ isIntersecting: true } as IntersectionObserverEntry], this as unknown as IntersectionObserver);
+      }
+      observe() {}
+      disconnect() {}
+      unobserve() {}
+      takeRecords() {
+        return [];
+      }
+    },
+  );
+  const watchedLoad = vi.fn(load);
+
+  render(<SceneCanvas load={watchedLoad} label="A scene" />);
+  expect(watchedLoad).not.toHaveBeenCalled();
+
+  act(() => reveal());
+  await waitFor(() => expect(mount).toHaveBeenCalledOnce());
+  expect(watchedLoad).toHaveBeenCalledOnce();
 });

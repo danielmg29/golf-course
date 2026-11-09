@@ -1,0 +1,213 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-07T00:00:00Z",
+  "title": "Design System: The Reserve (Beyond the 18th)",
+  "extensions": {
+    "colorMeta": {
+      "forest": { "role": "neutral", "displayName": "Forest", "canonical": "#102f25", "tonalRamp": ["#06140f", "#0b241b", "#102f25", "#1a4636", "#2f6450", "#558973", "#9dbcae", "#e3eee9"], "legacyName": "reserve" },
+      "forest-deep": { "role": "neutral", "displayName": "Forest Deep", "canonical": "#0c271e", "tonalRamp": ["#04110c", "#0c271e", "#163a2d", "#265242", "#3d6e5c", "#64917f", "#a4c2b5", "#e4efea"], "legacyName": "charcoal" },
+      "footer-ground": { "role": "neutral", "displayName": "Footer Ground", "canonical": "#0b241b", "tonalRamp": ["#030f0a", "#0b241b", "#14362a", "#234d3e", "#3a6957", "#608c7a", "#a1bfb2", "#e3eee9"] },
+      "club": { "role": "secondary", "displayName": "Club Green", "canonical": "#214a39", "tonalRamp": ["#0b1f17", "#143326", "#214a39", "#2f6550", "#46826a", "#6fa48c", "#a8cbbb", "#e2f0ea"] },
+      "antique": { "role": "primary", "displayName": "Antique Gold", "canonical": "#b89556", "tonalRamp": ["#2e2310", "#4f3c1c", "#694f22", "#7a5f2c", "#9a7a40", "#b89556", "#d6bd8c", "#f3e8d2"], "legacyName": "gold" },
+      "champagne": { "role": "primary", "displayName": "Champagne (gold hover)", "canonical": "#c9a86c", "tonalRamp": ["#33270f", "#57431e", "#7a5f2c", "#a0814a", "#c9a86c", "#dbc293", "#ead9b9", "#f8f0e1"] },
+      "bronze": { "role": "tertiary", "displayName": "Bronze (gold on light)", "canonical": "#7a5f2c", "tonalRamp": ["#241a08", "#3d2e12", "#5a441b", "#7a5f2c", "#9a7c45", "#b89a66", "#d6c19b", "#f1e7d5"] },
+      "bronze-deep": { "role": "tertiary", "displayName": "Bronze Deep", "canonical": "#694f22", "tonalRamp": ["#1f1606", "#36280f", "#4f3b17", "#694f22", "#88693a", "#a8895a", "#cbb48d", "#eee3cf"] },
+      "ivory": { "role": "neutral", "displayName": "Warm Ivory", "canonical": "#e8dfcd", "tonalRamp": ["#2b2720", "#4b4436", "#6f6550", "#958a72", "#b8ad96", "#d3c9b3", "#e8dfcd", "#f7f2e8"] },
+      "paper": { "role": "neutral", "displayName": "Off-white Paper", "canonical": "#f5f1e9", "tonalRamp": ["#2c2a25", "#4c4840", "#716b60", "#989184", "#bdb6a9", "#dbd5ca", "#ebe3d3", "#f5f1e9"], "legacyName": "alabaster" },
+      "paper-panel": { "role": "neutral", "displayName": "Paper Panel", "canonical": "#ebe3d3", "tonalRamp": ["#2b2822", "#4b453a", "#6f6756", "#958c79", "#b9b09c", "#d6cdba", "#ebe3d3", "#f8f4ec"] },
+      "coal": { "role": "neutral", "displayName": "Charcoal", "canonical": "#252a25", "tonalRamp": ["#111411", "#1b1f1b", "#252a25", "#3a413a", "#556055", "#7a857a", "#adb6ad", "#e5eae5"] },
+      "ink-on-light": { "role": "neutral", "displayName": "Ink on Light", "canonical": "#1f241f", "tonalRamp": ["#0d100d", "#1f241f", "#2f362f", "#465046", "#626e62", "#879387", "#b5bfb5", "#e8ece8"] },
+      "sage": { "role": "neutral", "displayName": "Sage", "canonical": "#52705c", "tonalRamp": ["#17221b", "#26372c", "#3a5243", "#52705c", "#6d8d78", "#90ab99", "#bbcfc1", "#e8f0ea"] },
+      "stone": { "role": "neutral", "displayName": "Stone (never text)", "canonical": "#777e76", "tonalRamp": ["#202320", "#363a35", "#4f554e", "#686f67", "#777e76", "#9aa099", "#c3c7c2", "#eceeeb"] },
+      "destructive": { "role": "neutral", "displayName": "Error Coral", "canonical": "#e5806f" },
+      "success": { "role": "neutral", "displayName": "Success Sage", "canonical": "#8fbf9f" }
+    },
+    "typographyMeta": {
+      "display-xl": { "displayName": "Display XL", "purpose": "The H1 of the homepage hero and every inner-page hero." },
+      "display-lg": { "displayName": "Display LG", "purpose": "Chapter headings, closing bands, error headings, the footer's last line." },
+      "h1": { "displayName": "H1", "purpose": "Editorial row headings and smaller chapter titles." },
+      "h2": { "displayName": "H2", "purpose": "Sub-sections; timeline marks at the same size in Manrope ExtraLight." },
+      "h3": { "displayName": "H3", "purpose": "Timeline stop titles, footer and menu-sheet heads." },
+      "lead": { "displayName": "Lead", "purpose": "The hero's supporting line, 40 to 48ch." },
+      "body": { "displayName": "Body", "purpose": "Running text, sentence case, at 84% of the text colour." },
+      "action": { "displayName": "Action", "purpose": "Buttons and text links." },
+      "meta": { "displayName": "Meta", "purpose": "Chapter index, hero info bar, captions, the rail's running head. 14px from 768px." },
+      "label": { "displayName": "Label", "purpose": "Short form and control labels. 13px from 768px." },
+      "figure": { "displayName": "Figure", "purpose": "Light tabular numerals on a hairline: holes, par, yards." }
+    },
+    "shadows": [
+      { "name": "ball", "value": "0 2px 4px rgb(0 0 0 / 0.35)", "purpose": "Only the ball riding the flagstick rail. Surfaces carry no shadows." }
+    ],
+    "overlays": [
+      { "name": "hero-scrim", "value": "linear-gradient(180deg, rgb(16 47 37 / 0.55) 0%, rgb(16 47 37 / 0.62) 45%, rgb(16 47 37 / 0.96) 100%)", "purpose": "Every page hero's photograph." },
+      { "name": "closing-scrim", "value": "linear-gradient(180deg, rgb(16 47 37 / 0.92) 0%, rgb(16 47 37 / 0.6) 40%, rgb(16 47 37 / 0.78) 100%)", "purpose": "Closing bands over a photograph." },
+      { "name": "stage-scrim", "value": "linear-gradient(90deg, rgb(16 47 37 / 0.9) 0%, rgb(16 47 37 / 0.62) 28%, transparent 52%)", "purpose": "Copy over the full-screen 3D course (180deg on phones)." },
+      { "name": "header-shade-light", "value": "linear-gradient(180deg, rgb(232 223 205 / 0.94), rgb(232 223 205 / 0))", "purpose": "The header's shade over light bands." },
+      { "name": "film-grain", "value": "fractal noise SVG, opacity 0.018, fixed layer", "purpose": "Grain over the whole site, never repainted on scroll." }
+    ],
+    "motion": [
+      { "name": "duration-instant", "value": "0.12s", "purpose": "Immediate UI feedback." },
+      { "name": "duration-fast", "value": "0.2s", "purpose": "Hover and buttons." },
+      { "name": "duration-standard", "value": "0.35s", "purpose": "Menus and components." },
+      { "name": "duration-editorial", "value": "0.65s", "purpose": "Image and type reveals; the CSS hero rise." },
+      { "name": "duration-dramatic", "value": "1s", "purpose": "A selected story beat; chapter rules." },
+      { "name": "duration-scene", "value": "1.4s", "purpose": "Camera sequences, the hero still's settle, heading line reveals." },
+      { "name": "ease-fluid", "value": "cubic-bezier(0.32, 0.72, 0, 1)", "purpose": "CSS transitions: panels, fields, world fades." },
+      { "name": "ease-hero-rise", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "The homepage hero's CSS entrance, 90ms stagger." },
+      { "name": "gsap-reveal", "value": "expo.out", "purpose": "data-lines, data-rise, image settles." },
+      { "name": "gsap-wipe", "value": "expo.inOut", "purpose": "data-clip / data-mask photo wipes, the menu sheet, the loader's exit." },
+      { "name": "gsap-rule", "value": "power3.inOut", "purpose": "data-rule gold growth." },
+      { "name": "gsap-draw", "value": "power2.inOut", "purpose": "data-draw SVG paths; scrubbed (0.6) with data-scrub." },
+      { "name": "reveal-fallback", "value": "4s", "purpose": "CSS reveals anything still hidden if GSAP never runs." },
+      { "name": "loader-window", "value": "min 1.1s, max 2.3s, CSS failsafe 3.2s fade, 3.8s scroll unlock", "purpose": "The once-a-visit putt loader." }
+    ],
+    "motionGrammar": {
+      "data-lines": "Heading lines slide up out of masks (1.4s expo.out, 0.12s stagger).",
+      "data-fade": "Fades and rises 36px (1.2s power3.out).",
+      "data-rise": "Children rise 24px, 0.08s stagger (homepage).",
+      "data-clip": "Photograph wipes open from the foot, image settles from 1.2 (inner pages).",
+      "data-mask": "Photograph wipes open from the foot, image settles from 1.12 (homepage).",
+      "data-rule": "The fairway line's gold stretch grows from the left.",
+      "data-draw": "An SVG path (pathLength 1) draws in; data-scrub ties it to scroll.",
+      "data-grow": "A line grows with scroll, x across or y down.",
+      "data-zoom": "Hero photo settles from 1.1 on load.",
+      "data-parallax": "Photo drifts -7% to 7% across the screen.",
+      "data-delay": "Seconds of stagger between neighbours.",
+      "data-tone": "dark | light: the header, rail and floating buttons follow the ground.",
+      "data-running-head": "A section's name for the flagstick rail."
+    },
+    "world3d": {
+      "tiers": { "poster": "reduced motion, data saver, or deviceMemory <= 2: no WebGL", "mid": "coarse pointer or deviceMemory <= 4: pixel ratio 1.5", "high": "pixel ratio 2" },
+      "frameProbe": "Steps down one tier if the median frame is slower than 25 fps, ignoring warm-up frames and gaps over 250ms.",
+      "renderOnDemand": "Scenes draw only when frame() reports a change and only while on screen.",
+      "acts": ["flight (homepage ball)", "story (legacy)", "journey (legacy)"],
+      "courseCost": "One shader-painted ground (2048/1024 plan textures), one sky, instanced trees 760/420, flags, clubhouse boxes; pixel ratio 1.5 or 1.25 on mid; exp fog 1/175.",
+      "ball": "Photoreal: GPU-baked dimple normal map, clear coat, gold alignment line and club print; takes each photograph's light; spins by distance."
+    },
+    "breakpoints": [
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" },
+      { "name": "frame-max", "value": "1440px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button (on dark)",
+      "kind": "button",
+      "refersTo": "button-primary-dark",
+      "description": "The one solid action in a dark band: antique gold, square, 48px.",
+      "html": "<button class=\"ds-btn-dark\">Explore the club</button>",
+      "css": ".ds-btn-dark { display: inline-flex; align-items: center; height: 48px; padding: 0 24px; background: var(--color-antique, #b89556); color: var(--color-forest, #102f25); font-family: Manrope, system-ui, sans-serif; font-size: 15px; font-weight: 600; border: none; border-radius: 0; cursor: pointer; transition: background-color 200ms ease-out, transform 200ms ease-out; } .ds-btn-dark:hover { background: #c9a86c; } .ds-btn-dark:focus-visible { outline: 1px solid #b89556; outline-offset: 3px; } .ds-btn-dark:active { transform: scale(0.98); }"
+    },
+    {
+      "name": "Primary Button (on light)",
+      "kind": "button",
+      "refersTo": "button-primary-light",
+      "description": "The one solid action in an ivory or paper band: forest, square, 48px.",
+      "html": "<button class=\"ds-btn-light\">Apply for membership</button>",
+      "css": ".ds-btn-light { display: inline-flex; align-items: center; height: 48px; padding: 0 24px; background: var(--color-forest, #102f25); color: var(--color-paper, #f5f1e9); font-family: Manrope, system-ui, sans-serif; font-size: 15px; font-weight: 600; border: none; border-radius: 0; cursor: pointer; transition: background-color 200ms ease-out, transform 200ms ease-out; } .ds-btn-light:hover { background: var(--color-club, #214a39); } .ds-btn-light:focus-visible { outline: 1px solid #7a5f2c; outline-offset: 3px; } .ds-btn-light:active { transform: scale(0.98); }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "A quieter square action on dark grounds; warms to gold on hover.",
+      "html": "<button class=\"ds-btn-outline\">Reset the view</button>",
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; height: 48px; padding: 0 24px; background: transparent; color: #f5f1e9; border: 1px solid rgb(245 241 233 / 0.35); border-radius: 0; font-family: Manrope, system-ui, sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: border-color 200ms ease-out, background-color 200ms ease-out; } .ds-btn-outline:hover { border-color: #b89556; background: rgb(184 149 86 / 0.1); } .ds-btn-outline:focus-visible { outline: 1px solid #b89556; outline-offset: 3px; }"
+    },
+    {
+      "name": "Text Link",
+      "kind": "custom",
+      "refersTo": "text-link",
+      "description": "The secondary action: a gold underline, a strand of the fairway line, and an arrow that steps forward.",
+      "html": "<a class=\"ds-link\" href=\"#\"><span class=\"ds-link-text\">Discover the course</span><svg class=\"ds-link-arrow\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></a>",
+      "css": ".ds-link { display: inline-flex; align-items: center; gap: 12px; color: #f5f1e9; font-family: Manrope, system-ui, sans-serif; font-size: 15px; font-weight: 600; text-decoration: none; } .ds-link-text { border-bottom: 1px solid #b89556; padding-bottom: 4px; } .ds-link-arrow { color: #b89556; transition: transform 200ms ease-out; } .ds-link:hover .ds-link-arrow { transform: translateX(4px); } .ds-link:focus-visible { outline: 1px solid #b89556; outline-offset: 3px; }"
+    },
+    {
+      "name": "Section Rule",
+      "kind": "custom",
+      "refersTo": "section-rule",
+      "description": "The fairway line at a section's head: a hairline with a 3px gold stretch, no visible label.",
+      "html": "<div class=\"ds-rule\"><span class=\"ds-rule-hair\"></span><span class=\"ds-rule-gold\"></span></div>",
+      "css": ".ds-rule { position: relative; display: block; height: 1px; color: #f5f1e9; width: 100%; } .ds-rule-hair { position: absolute; inset: 0; background: currentColor; opacity: 0.2; } .ds-rule-gold { position: absolute; top: -1px; left: 0; height: 3px; width: 18%; background: #b89556; transform-origin: left; transition: width 1s cubic-bezier(0.32, 0.72, 0, 1); }"
+    },
+    {
+      "name": "Progress Line",
+      "kind": "custom",
+      "refersTo": "progress-stop",
+      "description": "Steps on a hairline, gold as far as the current step; used by booking and the membership application.",
+      "html": "<div class=\"ds-progress\"><div class=\"ds-progress-track\"><span class=\"ds-progress-hair\"></span><span class=\"ds-progress-gold\"></span></div><ol class=\"ds-progress-steps\"><li><span class=\"ds-dot ds-done\"></span>Time</li><li><span class=\"ds-dot ds-current\"></span>Players</li><li><span class=\"ds-dot\"></span>Pay</li></ol></div>",
+      "css": ".ds-progress { font-family: Manrope, system-ui, sans-serif; color: #f5f1e9; width: 320px; } .ds-progress-track { position: relative; height: 1px; margin: 0 5px; } .ds-progress-hair { position: absolute; inset: 0; background: currentColor; opacity: 0.2; } .ds-progress-gold { position: absolute; top: -1px; left: 0; height: 3px; width: 50%; background: #b89556; transition: width 500ms ease-out; } .ds-progress-steps { display: flex; justify-content: space-between; margin: -6px 0 0; padding: 0; list-style: none; font-size: 12px; font-weight: 600; } .ds-progress-steps li { display: flex; flex-direction: column; align-items: center; gap: 8px; } .ds-progress-steps li:first-child { align-items: flex-start; } .ds-progress-steps li:last-child { align-items: flex-end; opacity: 0.7; } .ds-dot { width: 11px; height: 11px; border-radius: 9999px; border: 2px solid rgb(245 241 233 / 0.3); background: #102f25; box-sizing: border-box; } .ds-done { border-color: #b89556; background: #b89556; } .ds-current { border-color: #b89556; }"
+    },
+    {
+      "name": "Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "A bottom-ruled field: transparent, square, the rule turns solid gold on focus.",
+      "html": "<input class=\"ds-field\" placeholder=\"Your email\" />",
+      "css": ".ds-field { width: 280px; height: 52px; background: transparent; border: none; border-bottom: 1px solid rgb(184 149 86 / 0.4); border-radius: 0; color: #f5f1e9; font-family: Manrope, system-ui, sans-serif; font-size: 16px; transition: border-color 300ms cubic-bezier(0.32, 0.72, 0, 1); } .ds-field::placeholder { color: rgb(245 241 233 / 0.4); } .ds-field:hover { border-bottom-color: rgb(184 149 86 / 0.7); } .ds-field:focus { outline: none; border-bottom-color: #b89556; }"
+    },
+    {
+      "name": "Top Bar Navigation",
+      "kind": "nav",
+      "refersTo": "button-header",
+      "description": "Main pages in Manrope with an antique underline that draws on hover and stays on the current page, then Apply and the booking button.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\" class=\"ds-nav-link ds-current\">The course</a><a href=\"#\" class=\"ds-nav-link\">Amenities</a><a href=\"#\" class=\"ds-nav-link\">Membership</a><a href=\"#\" class=\"ds-nav-apply\">Apply</a><a href=\"#\" class=\"ds-nav-book\">Book a tee time</a></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: 28px; padding: 16px 24px; background: #102f25; color: #f5f1e9; font-family: Manrope, system-ui, sans-serif; font-size: 14px; font-weight: 600; } .ds-nav a { color: inherit; text-decoration: none; } .ds-nav-link { position: relative; } .ds-nav-link::after { content: ''; position: absolute; left: 0; bottom: -6px; height: 1px; width: 100%; background: #b89556; transform: scaleX(0); transform-origin: left; transition: transform 300ms ease-out; } .ds-nav-link:hover::after, .ds-nav-link.ds-current::after { transform: scaleX(1); } .ds-nav-apply { border-bottom: 1px solid #b89556; padding-bottom: 2px; } .ds-nav-book { display: inline-flex; align-items: center; height: 44px; padding: 0 20px; background: #b89556; color: #102f25 !important; transition: background-color 200ms ease-out; } .ds-nav-book:hover { background: #c9a86c; } .ds-nav a:focus-visible { outline: 1px solid #b89556; outline-offset: 3px; }"
+    },
+    {
+      "name": "Figures",
+      "kind": "custom",
+      "refersTo": "figure",
+      "description": "Label and value pairs on a hairline, in light tabular Manrope.",
+      "html": "<dl class=\"ds-figures\"><div><dt>Holes</dt><dd>18</dd></div><div><dt>Par</dt><dd>72</dd></div><div><dt>Yards</dt><dd>6,940</dd></div></dl>",
+      "css": ".ds-figures { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 16px; margin: 0; border-top: 1px solid rgb(245 241 233 / 0.2); color: #f5f1e9; font-family: Manrope, system-ui, sans-serif; width: 360px; } .ds-figures div { padding-top: 12px; } .ds-figures dt { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; opacity: 0.8; } .ds-figures dd { margin: 4px 0 0; font-size: 28px; font-weight: 300; font-variant-numeric: tabular-nums lining-nums; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Fairway Line",
+    "overview": "The site is one day at a private club, told in numbered chapters on a strict Swiss grid. Deep forest bands carry the scenes and the working tools; warm ivory and off-white bands carry the reading. A single fine antique-gold line, a hairline with a three-pixel gold stretch, runs through every page. It is the hero's ball flight, each section's rule, the timeline, the plan, the progress bar, the rail and the footer. Typography is light and literary at display sizes (Cormorant Garamond, weight 300, flush left) and plain and functional everywhere else (Manrope). Photographs are authentic landscape, full-bleed, under a forest overlay.\n\nDensity is low and editorial: wide bands (96 to 128px of vertical padding), headings set from column 3 of the 12-column grid, copy kept to 40 to 48ch. Surfaces are flat. Depth comes from photography, overlays and one WebGL world, never from shadows on panels. Motion is GSAP, driven by data attributes on server-rendered markup. Every motion has a still end state, so the site reads fully with scripts off or reduced motion on.\n\nThe world rejects the luxury template of a photo hero over a row of equal cards, gold everywhere, glass decoration, cards for their own sake, and kickers or eyebrows over headings.",
+    "keyCharacteristics": [
+      "Forest and ivory or paper bands alternating dark and light, full-bleed.",
+      "One antique-gold fairway line, hairline plus 3px gold, as the site's only transition grammar.",
+      "Cormorant Garamond Light at display sizes, flush left, with balanced wrapping; Manrope for every functional word.",
+      "Tabular, lining figures for every time, price, yardage and score.",
+      "Square-edged actions; circles are kept for the ball: the stops, the ring, the cup and the stepper.",
+      "A flagstick rail on wide screens that carries the page's progress and section name.",
+      "Scroll-driven 3D that draws only when something moves, with a poster fallback."
+    ],
+    "rules": [
+      { "name": "The Working-Names Rule", "body": "Components are written once against the legacy token names, and those names now carry blueprint values: `reserve` is forest, `charcoal` is forest-deep, `alabaster` is paper, `gold` is antique, `champagne` is the gold hover. A light band (`band-light` on ivory, `band-paper` on paper) re-inks them: alabaster becomes ink-on-light, gold becomes bronze, champagne becomes bronze-deep, and reserve and charcoal become the light ground or panel. New components use the working names, so they read on either ground without variants.", "section": "colors" },
+      { "name": "The Scarce Gold Rule", "body": "Antique gold is for the fairway line, accents and the one primary action in a band. If gold is filling an area larger than a button, it is wrong.", "section": "colors" },
+      { "name": "The Over-Imagery Rule", "body": "Copy over a photograph or the 3D course always sits on a forest scrim (a linear gradient of rgb(16 47 37) from about 0.5 to 0.96, or 0.9 to transparent from the copy's side), never on a raw image.", "section": "colors" },
+      { "name": "The One Italic Rule", "body": "Italics are kept for one phrase a page, inside its main heading. CSS sets `em` in section headings (`main h2`, `main h3`) upright, so authors may mark a phrase and only the hero's phrase leans. The club's own name (wordmark and footer) is the one standing exception.", "section": "typography" },
+      { "name": "The Scorecard Figures Rule", "body": "Every figure (time, price in KES, yardage, par, score, step count) is set in tabular, lining numerals. Cormorant's old-style default is switched off site-wide.", "section": "typography" },
+      { "name": "The Sentence Case Rule", "body": "Labels, metadata and running text are in sentence case. The only spaced capitals are the wordmark's \"Golf club\" line.", "section": "typography" },
+      { "name": "The Asymmetric Frame Rule", "body": "On wide screens the left margin is the rail plus a gutter (112px), never mirrored. Nothing sits under the rail.", "section": "layout" },
+      { "name": "The Flat Ground Rule", "body": "A panel is separated by a tone step or a hairline, never by a shadow.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do set every new section as a full-bleed band (dark forest for tools and scenes, ivory or paper for reading) and let `band-light` or `band-paper` re-ink the working tokens.",
+      "Do open each section with the fairway line (a hairline plus 3px gold) and name it for the rail, rather than labelling it.",
+      "Do keep one solid primary action per band: antique on dark, forest on light, square, 48px. Pair it with an underlined text link with an arrow.",
+      "Do set headings in Cormorant Garamond 300, flush left from column 3, with balanced wrapping.",
+      "Do set every figure in tabular, lining Manrope, light at display sizes.",
+      "Do put copy over photographs and the 3D course on a forest scrim.",
+      "Do label every sample (prices, people, hours, events, itineraries) in plain small text, and leave unknown details as visible placeholders (\"Address to be added\").",
+      "Do give every motion a still end state that reads without scripts, WebGL or motion.",
+      "Do draw 3D on demand only, behind a tier check, with a poster fallback."
+    ],
+    "donts": [
+      "Don't put kickers, eyebrows or labels above headings. Section names go to the rail; the homepage's numbered chapter index on the rule is the only index.",
+      "Don't use glass, frosted blur or translucent panels as decoration.",
+      "Don't build rows of equal cards, or put content in a card for its own sake. Use hairlines, the grid and photographs.",
+      "Don't use antique gold for body text, large fills or a second accent role. On light grounds it is always bronze.",
+      "Don't use Stone for text.",
+      "Don't italicise more than the one phrase in the page's main heading.",
+      "Don't round corners on buttons, panels, fields or photographs, or add shadows to surfaces.",
+      "Don't use spaced capitals for labels or running text.",
+      "Don't invent members, testimonials, press, partners or membership numbers."
+    ]
+  }
+}

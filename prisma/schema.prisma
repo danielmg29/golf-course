@@ -1,0 +1,38 @@
+// The source of truth for the data model. `npm run schema` generates the Prisma
+// client and the contract the UI reads (lib/generated/schema.ts).
+//
+// The `///` annotations are the interface specification, like the manual's Adaptive class:
+//   @adaptive on a model: displayField, listFields, filterFields, ordering, label,
+//                         labelPlural, immutable
+//   @field on a field:    label, widget, min, max, derivesFrom
+
+generator client {
+  provider = "prisma-client"
+  output   = "../backend/generated/prisma"
+}
+
+generator contract {
+  provider = "node backend/generate-contract.mts"
+  output   = "../lib/generated/schema.ts"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// @adaptive {"displayField":"name","listFields":["number","name","par","yards","strokeIndex"],"filterFields":["par"],"ordering":["number"],"immutable":true}
+model Hole {
+  /// @field {"label":"ID"}
+  id          Int    @id @default(autoincrement())
+  /// @field {"label":"Hole","min":1,"max":18}
+  number      Int    @unique
+  name        String @db.VarChar(60)
+  /// @field {"min":3,"max":5}
+  par         Int
+  /// @field {"min":0}
+  yards       Int
+  /// @field {"min":1,"max":18}
+  strokeIndex Int    @unique @map("stroke_index")
+
+  @@map("holes")
+}
