@@ -207,11 +207,12 @@ function grass(count: number) {
 const easeOut = (t: number) => 1 - (1 - t) ** 3;
 
 /**
- * The first-visit loading screen's putt (components/feedback/Loader.tsx): a low camera behind the
- * cup, looking back up the line, and a photoreal ball rolling towards it through the grass as
- * the page loads. `progress()` runs from 0 to 1; at the end the ball drops. Returns a teardown.
+ * The loading screen's putt (components/feedback/Loader.tsx): a low camera behind the cup,
+ * looking back up the line, and a photoreal ball rolling towards it through the grass.
+ * `progress()` runs from 0 to 1; at the end the ball drops. The scene stays mounted between
+ * putts and draws only while `active()` says one is playing. Returns a teardown.
  */
-export function mountPutt(container: HTMLElement, progress: () => number) {
+export function mountPutt(container: HTMLElement, progress: () => number, active: () => boolean = () => true) {
   const renderer = new WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   renderer.toneMapping = ACESFilmicToneMapping;
@@ -310,6 +311,7 @@ export function mountPutt(container: HTMLElement, progress: () => number) {
   resize();
 
   const tick = () => {
+    if (!active()) return;
     place(progress());
     sky.position.copy(camera.position);
     renderer.render(scene, camera);

@@ -66,7 +66,11 @@ The tools are demonstrations that run in the browser on sample data. Nothing is 
 - **The header** (`components/layout/SiteHeader.tsx`): on wide screens, a 72px "flagstick rail" down the left edge, with the page's progress as the fairway line, a ball riding it, and the current section's name (anything marked `data-running-head`). A top bar holds the wordmark, the main pages, Apply and Book. The menu is a full-screen sheet with every page, today's hours and quick bookings. Because of the rail, `frame` keeps a 112px left margin on wide screens.
 - **The footer** (`SiteFooter.tsx`): the day's last line and its actions, a club notes sign-up (a demo), four columns, and the club's name set across the full width.
 - **Header tone** (`lib/use-ground-tone.ts`): the header and floating buttons turn dark over light bands, and the floating buttons step aside over `data-floating="hide"` and the footer.
-- **The loading putt** (`components/feedback/Loader.tsx`, `puttScene.ts`): on a visit's first page only, with motion allowed, a ball is putted towards you through the grass while the page loads and drops into the cup as it finishes. It is capped near two seconds and can be skipped. A script in `<head>` decides before the first paint, and CSS takes it down after about three seconds if nothing else does.
+- **The loading putt** (`components/feedback/Loader.tsx`, `puttScene.ts`): before every page, a ball is putted towards you through the grass and drops into the cup, then the page shows. This covers a page's first load, every link inside the site and back/forward.
+  - The putt always plays out in full. If the page isn't ready, the ball waits short of the cup.
+  - Links to other sites, links within the same page, and modified clicks (new tab and so on) are left alone.
+  - It can be skipped with Skip or Escape, and never shows with reduced motion.
+  - A script in `<head>` puts it up before the first paint, and CSS takes it down after twelve seconds if scripts fail.
 - **Error pages** (`app/not-found.tsx`, `app/error.tsx`, `app/(marketing)/error.tsx`, `app/global-error.tsx`): "Lipped out" for 404, "That one found the water" for errors, and "Play is suspended" when the root layout fails. They are animated in SVG with no script, and show a still frame with reduced motion.
 
 ## Layout
@@ -162,7 +166,7 @@ Two earlier homepages are no longer rendered: the Continuous Putt Journey (`feat
 
 ## Bundle size
 
-First-load JavaScript is 205 to 209 KB gzipped per page, of which about 50 KB is GSAP with ScrollTrigger and SplitText. The world's shell adds about 1 KB to every page. Three.js (about 131 KB) loads on a visit's first page for the loading putt, and otherwise only on `/course` and the homepage, after the page is interactive (on the homepage, only when the browser is idle and the device isn't on the `poster` tier). The manual's 140 KB budget is written for console routes, and this site is 67 KB over it, mostly because of the motion libraries.
+First-load JavaScript is 205 to 209 KB gzipped per page, of which about 50 KB is GSAP with ScrollTrigger and SplitText. The world's shell adds about 1 KB to every page. Three.js (about 131 KB) loads on every first page load for the loading putt (then stays for later putts), and for the 3D scenes on `/course` and the homepage, after the page is interactive (on the homepage, only when the browser is idle and the device isn't on the `poster` tier). The manual's 140 KB budget is written for console routes, and this site is 67 KB over it, mostly because of the motion libraries.
 
 Don't import `lib/env.ts` from a client component. It brings in Zod, which adds about 30 KB to every page.
 

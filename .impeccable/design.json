@@ -59,7 +59,7 @@
       { "name": "gsap-rule", "value": "power3.inOut", "purpose": "data-rule gold growth." },
       { "name": "gsap-draw", "value": "power2.inOut", "purpose": "data-draw SVG paths; scrubbed (0.6) with data-scrub." },
       { "name": "reveal-fallback", "value": "4s", "purpose": "CSS reveals anything still hidden if GSAP never runs." },
-      { "name": "loader-window", "value": "min 1.1s, max 2.3s, CSS failsafe 3.2s fade, 3.8s scroll unlock", "purpose": "The once-a-visit putt loader." }
+      { "name": "loader-putt", "value": "cover 0.45s, putt 2.4s (holds short of the cup until the page is ready, at most 8s more), drop 0.35s, lift 0.7s; CSS failsafe 12s fade, 12.6s scroll unlock", "purpose": "The putt loader before every page: first loads, links inside the site, back and forward." }
     ],
     "motionGrammar": {
       "data-lines": "Heading lines slide up out of masks (1.4s expo.out, 0.12s stagger).",

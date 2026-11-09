@@ -284,7 +284,11 @@ A row of label and value pairs on a hairline. The label is in meta style at 80%,
 The nineteenth hole, on the darker footer ground. It opens with the day's last line at display-lg and two actions (book, WhatsApp). Below are club notes, four columns (Explore, Book, Visit, Hours) under hairlines, and the samples notice. Then the fairway line runs at full length and hands over to the club's name, set across the whole width with a small antique ring as its ball.
 
 ### Loader
-The first-visit putt. A script in `<head>` marks the page before first paint, once per visit (sessionStorage) and only with motion allowed. It is a forest screen with the wordmark, "Reading the green" in Cormorant italic, a Skip link (Escape also skips) and a fairway line filling with progress. Behind it a photoreal putt rolls towards the camera and drops. It shows for at least 1.1s and never more than 2.3s, then lifts by clip-path. CSS fades it out by 3.8s and unlocks the scroll even if scripts fail.
+The putt before every page (owner's choice, 2026-11-09), with motion allowed. On a page's first load, a script in `<head>` marks the page before first paint. On a link inside the site, the screen rises over the page being left (clip-path, 0.45s), and only then does the next page load behind it. Back and forward get a putt too.
+
+It is a forest screen with the wordmark, "Reading the green" in Cormorant italic, a Skip link (Escape also skips) and a fairway line filling with progress. Behind it a photoreal putt rolls towards the camera. It always plays out in full (2.4s). If the page isn't ready by then, the ball waits short of the cup and drops when it is (at most 8s more). The ball drops (0.35s) and the screen lifts by clip-path (0.7s).
+
+The 3D scene loads once and stays, drawing only during a putt. With reduced motion it never shows. If scripts fail, CSS fades it by 12s and unlocks the scroll.
 
 ### Error Pages
 The 404, route error and global error pages share one scene on forest, under a radial lift from the foot: the crest, an SVG illustration with some golf in it (404: the putt lips out; 500: into the pond; global: play suspended), a display-lg heading that owns the failure and names the next step, actions, and the error code on the fairway line. The illustrations are SMIL, so they run without script. Each also draws a still final frame for reduced motion.
